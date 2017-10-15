@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SaveTheme;
+use App\Http\Requests\SaveDistrict;
 use App\Models\District;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +22,7 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        $entities = $this->model::with('category')->orderBy('created_at', 'DESC')->paginate();
+        $entities = $this->model::orderBy('created_at', 'DESC')->paginate();
         $viewName = $this->viewName;
 
         return view("admin.$this->viewName.index", compact('entities', 'viewName'));
@@ -44,10 +44,10 @@ class DistrictController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  SaveTheme  $request
+     * @param  SaveDistrict  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaveTheme $request)
+    public function store(SaveDistrict $request)
     {
         $this->save($request);
 
@@ -75,7 +75,7 @@ class DistrictController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaveTheme $request, $id)
+    public function update(SaveDistrict $request, $id)
     {
         $this->save($request, $id);
 
@@ -95,15 +95,13 @@ class DistrictController extends Controller
 
         $entity->delete();
 
-        logger()->info("Admin {$this->user->name} delete $entity->title", []);
-
         return redirect()->route("admin.$this->viewName.index");
     }
 
     /**
-     * @param SaveTheme $request
+     * @param SaveDistrict $request
      */
-    private function save(SaveTheme $request, $id = null)
+    private function save(SaveDistrict $request, $id = null)
     {
         if ($id) {
             $entity = $this->model::findOrFail($id);
@@ -111,19 +109,8 @@ class DistrictController extends Controller
             $entity = $this->model::findOrNew($id);
         }
 
-        $entity->title = $request->get('title');
-        $entity->slug = str_slug($request->get('title'));
-        $entity->html = $request->get('html');
-        $entity->is_published = $request->get('is_published', false);
-        $entity->theme_category_id = $request->get('theme_category_id');
-        $fileData = $this->uploadFile('preview_image', 'themes');
-        if ($fileData) {
-            $entity->preview_image = $fileData;
-        }
-
-        if (!$entity->created_by) {
-            $entity->created_by = $this->user->id;
-        }
+        $entity->name = $request->get('name');
+        $entity->polygon = $request->get('polygon');
 
         return $entity->save();
     }

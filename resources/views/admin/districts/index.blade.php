@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <b>Список тем</b>
+                        <b>Список округiв</b>
                         <a href="{{ route("admin.$viewName.create") }}" class="btn btn-primary pull-right btn-xs">
                             <i class="glyphicon glyphicon-plus-sign"></i> Додати
                         </a>
@@ -16,10 +16,8 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Роздiл</th>
-                                <th>Заголовок</th>
-                                <th>Опубліковано</th>
-                                <th>Дата</th>
+                                <th>Назва</th>
+                                {{-- <th>Дата</th> --}}
                                 <th></th>
                             </tr>
                             </thead>
@@ -27,18 +25,12 @@
                                 @foreach($entities as $entity)
                                 <tr>
                                     <td class="text-left">
-                                        {{ $entity->category->title }}
+                                        {{ $entity->name }}
                                     </td>
-                                    <td class="text-left">
-                                        {{ $entity->title }}
-                                    </td>
-                                    <td class="text-left">
-                                        {{ $entity->is_published ? 'Так' : 'Нi' }}
-                                    </td>
-                                    <td class="text-left">
-                                        {{ $entity->created_at }}
-                                    </td>
-                                    <td>
+                                    {{-- <td class="text-left"> --}}
+                                        {{-- {{ $entity->created_at }} --}}
+                                    {{-- </td> --}}
+                                    <td class="text-right">
                                         <a title="Редагувати" href="{{ route("admin.$viewName.edit", $entity->id) }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                                         @include('_delete_btn')
                                     </td>
