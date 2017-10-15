@@ -21,4 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::resource('districts', 'Admin\DistrictController', ['as' => 'admin']);
+    Route::resource('deputies', 'Admin\DeputyController', ['as' => 'admin']);
 });

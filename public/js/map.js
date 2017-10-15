@@ -90,7 +90,7 @@ function olpoly2gpoly(olpoly, id, num, descr) {
 	return gpoly;
 }
 
-function layerDataResponse(data) {
+function drawDistricts(data) {
 	var wktformat = new ol.format.WKT();
 	var jsobj = JSON.parse(data);
 	features = jsobj;

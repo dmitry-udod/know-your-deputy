@@ -11,15 +11,13 @@
         <script src="{{ asset('js/map.js') }}"></script>                
 
         <style type="text/css">
-                  #map{         
-        height: 100%;
-      }
+            #map{height: 100%;}
 
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+            html, body {
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
         </style>
     </head>
     <body>
@@ -36,7 +34,7 @@
                 zoom : 13,
                 center : new google.maps.LatLng(46.787, 36.79)
             });
-            layerDataResponse('{!! \App\Models\District::all()->toJson() !!}');
+            drawDistricts('{!! \App\Models\District::all()->toJson() !!}');
         }
         </script>
 
