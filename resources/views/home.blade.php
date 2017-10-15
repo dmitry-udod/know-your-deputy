@@ -16,7 +16,7 @@
 
                     <ul>
                         <li>
-                            <a>Округи</a>
+                            <a href="{{ route('admin.districts.index') }}">Округи</a>
                         </li>
                     </ul>
                 </div>
