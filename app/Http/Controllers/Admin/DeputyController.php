@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\SaveDistrict;
+use App\Http\Requests\SaveDeputy;
 use App\Models\Deputy;
 use App\Http\Controllers\Controller;
 
@@ -44,10 +44,10 @@ class DeputyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  SaveDistrict  $request
+     * @param  SaveDeputy  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SaveDistrict $request)
+    public function store(SaveDeputy $request)
     {
         $this->save($request);
 
@@ -75,7 +75,7 @@ class DeputyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(SaveDistrict $request, $id)
+    public function update(SaveDeputy $request, $id)
     {
         $this->save($request, $id);
 
@@ -99,9 +99,9 @@ class DeputyController extends Controller
     }
 
     /**
-     * @param SaveDistrict $request
+     * @param SaveDeputy $request
      */
-    private function save(SaveDistrict $request, $id = null)
+    private function save(SaveDeputy $request, $id = null)
     {
         if ($id) {
             $entity = $this->model::findOrFail($id);
@@ -109,8 +109,14 @@ class DeputyController extends Controller
             $entity = $this->model::findOrNew($id);
         }
 
-        $entity->name = $request->get('name');
-        $entity->polygon = $request->get('polygon');
+        $entity->full_name = $request->get('full_name');
+        $entity->birthday = $request->get('birthday');
+        $entity->faction = $request->get('faction');
+        $entity->work = $request->get('work');
+        $entity->district_id = (int) $request->get('district_id');
+        $entity->region = $request->get('region');
+        $entity->details = $request->get('details');
+        $entity->url_report_2016 = $request->get('url_report_2016');
 
         return $entity->save();
     }

@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class District extends Model
 {
-
+	public function deputy()
+    {
+	    return $this->belongsTo(Deputy::class, 'id', 'district_id');
+    }
 }

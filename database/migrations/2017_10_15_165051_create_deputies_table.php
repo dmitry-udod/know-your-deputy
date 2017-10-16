@@ -20,7 +20,7 @@ class CreateDeputiesTable extends Migration
             $table->string('faction')->nullable();
             $table->string('work')->nullable();
             $table->unsignedInteger('district_id')->nullable();
-            $table->unsignedInteger('region_id')->nullable();
+            $table->string('region')->nullable();
             $table->text('details')->nullable();
             $table->text('url_report_2016')->nullable();
             $table->timestamps();

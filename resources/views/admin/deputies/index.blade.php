@@ -16,8 +16,10 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th>Назва</th>
-                                {{-- <th>Дата</th> --}}
+                                <th>ПIБ</th>
+                                <th>Округ</th>
+                                <th>Фракція</th>
+                                <th>Дата</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -25,11 +27,17 @@
                                 @foreach($entities as $entity)
                                 <tr>
                                     <td class="text-left">
-                                        {{ $entity->name }}
+                                        {{ $entity->full_name }}
                                     </td>
-                                    {{-- <td class="text-left"> --}}
-                                        {{-- {{ $entity->created_at }} --}}
-                                    {{-- </td> --}}
+                                    <td class="text-left">
+                                        {{ $entity->district->name }}
+                                    </td>
+                                    <td class="text-left">
+                                        {{ $entity->faction }}
+                                    </td>
+                                    <td class="text-left">
+                                        {{ $entity->created_at }}
+                                    </td>
                                     <td class="text-right">
                                         <a title="Редагувати" href="{{ route("admin.$viewName.edit", $entity->id) }}" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
                                         @include('_delete_btn')

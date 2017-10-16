@@ -23,7 +23,14 @@ function showData(evt, content) {
 function polygonMouseOver(evt) {
 	if (isInfoWindowOpen(infoWin2))
 		return;
-	var content = '<div id="content">' + this.featureNum + '</div>'
+	var content = '<div id="content">' + this.distirct.name ;
+	
+	if (this.distirct.deputy) {
+		var deputy = this.distirct.deputy;
+		content += '<br>' + deputy.full_name + '<br>';
+	}
+
+	content += '</div>';
 	timerHandle = clearTimeout(timerHandle);
 	setTimeout(showData(evt, content), 1000);
 
@@ -42,7 +49,7 @@ function polygonMouseOut(evt) {
 
 function polygonMouseClick(evt) {
 	var content = '<div id="content"><div><center>'
-			+ this.featureNum 
+			+ this.distirct.name 
 			+ '</center></div></div>';
 	if (infoWin)
 		infoWin.close();
@@ -57,12 +64,10 @@ function polygonMouseClick(evt) {
 	infoWin2.open(gmap);
 }
 
-function olpoly2gpoly(olpoly, id, num, descr) {
+function olpoly2gpoly(olpoly, feature) {
 	var olrings = olpoly.getLinearRings();
 	var gpoly = new google.maps.Polygon({
-		featureId : id,
-		featureNum : num,
-		featureDescr : '',
+		distirct: feature,
 		strokeWeight : 1,
 		strokeColor: '#779997',
 		fillOpacity : 0.5,
@@ -84,28 +89,24 @@ function olpoly2gpoly(olpoly, id, num, descr) {
 		grings.push(gring);
 	}
 	gpoly.setPaths(grings);
-	if (descr)
-		gpoly.featureDescr = descr;
 	gpoly.setMap(gmap);
 	return gpoly;
 }
 
 function drawDistricts(data) {
-	var wktformat = new ol.format.WKT();
-	var jsobj = JSON.parse(data);
-	features = jsobj;
+	var wkt = new ol.format.WKT();
+	var features = JSON.parse(atob(data));
 	var zoom = 11;
-
+console.log(features[43]);
 	for (var i = 0; i < features.length; i++) {
 		var lbl = features[i]['num'];
-		var feature = wktformat.readFeature(features[i]['polygon']);
+		var feature = wkt.readFeature(features[i]['polygon']);
 		var geom = feature.getGeometry();
 		if (geom instanceof ol.geom.MultiPolygon) {
 			var polys = geom.getPolygons();
 			for (var j = 0; j < polys.length; j++) {
 				var olpoly = polys[j];
-				var gpoly = olpoly2gpoly(olpoly, features[i]['id'],
-						features[i]['name'], features[i]['name']);
+				var gpoly = olpoly2gpoly(olpoly, features[i]);
 				google.maps.event.addListener(gpoly, 'mousemove',
 						polygonMouseOver);
 				google.maps.event.addListener(gpoly, 'mouseout',

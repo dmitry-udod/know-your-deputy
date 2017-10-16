@@ -34,7 +34,7 @@
                 zoom : 13,
                 center : new google.maps.LatLng(46.787, 36.79)
             });
-            drawDistricts('{!! \App\Models\District::all()->toJson() !!}');
+            drawDistricts('{!! base64_encode(\App\Models\District::with('deputy')->get()->toJson()) !!}');
         }
         </script>
 
