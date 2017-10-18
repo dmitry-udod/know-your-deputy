@@ -23,11 +23,16 @@ function showData(evt, content) {
 function polygonMouseOver(evt) {
 	if (isInfoWindowOpen(infoWin2))
 		return;
-	var content = '<div id="content">' + this.distirct.name ;
+	var content = '<div id="content"><b>' + this.distirct.name + '</b>';
 	
 	if (this.distirct.deputy) {
 		var deputy = this.distirct.deputy;
-		content += '<br>' + deputy.full_name + '<br>';
+		content += '<br>ПІБ: ' + deputy.full_name;
+		content += '<br>Дата народження: ' + deputy.birthday;
+		content += '<br>Депутатська фракція: ' + deputy.faction;
+		content += '<br>Місце роботи, посада: ' + deputy.work;
+		content += '<br>Район у місті: ' + deputy.region;
+		content += '<br><br><b>Данi про прийоми депутата</b>: ' + deputy.details;
 	}
 
 	content += '</div>';
